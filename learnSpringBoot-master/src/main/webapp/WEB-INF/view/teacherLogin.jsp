@@ -1,9 +1,8 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <meta charset="ISO-8859-1">
-  <title>Insert title here</title>
-  <style type="text/css">
+    <title>Title</title>
+    <style type="text/css">
     html {
       height: 100%;
     }
@@ -175,8 +174,8 @@
 </head>
 <body>
 <div class="login-box">
-  <h2>Login</h2>
-  <form action="/student/loginPage" method="post">
+  <h2>Teacher Login</h2>
+  <form action="/teacher/loginPage" method="post">
     <div class="user-box">
       <input type="email" name="email" required="">
       <label>email</label>

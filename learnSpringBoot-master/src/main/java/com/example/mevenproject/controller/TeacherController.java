@@ -1,23 +1,33 @@
 package com.example.mevenproject.controller;
 
+import com.example.mevenproject.document.Student;
 import com.example.mevenproject.document.Teacher;
+import com.example.mevenproject.exception.StudentNotFound;
+import com.example.mevenproject.exception.TeacherNotFound;
+import com.example.mevenproject.request.StudentRequest;
 import com.example.mevenproject.request.TeacherRequest;
 import com.example.mevenproject.response.TeacherResponse;
+import com.example.mevenproject.service.StudentService;
 import com.example.mevenproject.service.TeacherService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
 @RequestMapping("/teacher")
-@RestController
+@Controller
 public class TeacherController {
     @Autowired
     private TeacherService teacherService;
+    @Autowired
+    private StudentService studentService;
 
     @PostMapping("/createTeacher")
     public ResponseEntity<?> createTeacher(@Valid @RequestBody TeacherRequest teacherRequest) {
@@ -56,11 +66,32 @@ public class TeacherController {
         List<Teacher> allTeacher = teacherService.findAllTeacher();
         return new ResponseEntity<>(allTeacher, HttpStatus.OK);
     }
+    /*@RequestMapping("/loginPage")
+    public String teacherLogin(TeacherRequest teacherRequest, Model model) throws TeacherNotFound {
+        Teacher teacher = teacherService.findTeacherByEmailAndPassword(teacherRequest.getEmail(), teacherRequest.getPassword());
+        if (!ObjectUtils.isEmpty(teacher)) {
+            model.addAttribute("students", studentService.getAllStudent());
+            return "render";
+        } else {
+            return "login";
+        }
+
+    }*/
+    @RequestMapping("/login")
+    public String loginPage()
+    {
+        return "teacherLogin";
+    }
+    @RequestMapping("/loginPage")
+    public ModelAndView teacherWelcome(TeacherRequest teacherRequest) throws TeacherNotFound {
+        Teacher teacher = teacherService.findTeacherByEmailAndPassword(teacherRequest.getEmail(), teacherRequest.getPassword());
+        ModelAndView modelAndView=new ModelAndView("teacherWelcome");
+        modelAndView.addObject("teacherData",teacher);
+        modelAndView.addObject("students",studentService.getAllStudent());
+        return modelAndView;
+
+
+    }
+
 }
-//    public ResponseEntity<?> createTeacher(@RequestBody Teacher teacher)
-//    {
-//        Teacher teacher1 = teacherService.createTeacher(teacher);
-//        return new ResponseEntity<>(teacher1, HttpStatus.CREATED);
-//    }
-//fetch type eager and lazy
-//many to many
+

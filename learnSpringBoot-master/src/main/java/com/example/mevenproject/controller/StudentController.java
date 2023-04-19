@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -35,9 +36,9 @@ public class StudentController {
     }
 
     @GetMapping("/getStudentByRollno")
-    public ResponseEntity<?> getStudentByRollno(@RequestParam int rollno) throws StudentNotFound {
+    public ResponseEntity<?> getStudentByRollno(@RequestParam int rollno,@RequestParam String section) throws StudentNotFound {
         ResponseEntity<?> entity;
-        Student student = studentService.findStudenyByRollno(rollno);
+        Student student = studentService.findStudenyByRollnoAndSection(rollno,section);
         if (!ObjectUtils.isEmpty(student)) {
             entity = new ResponseEntity<>(student, HttpStatus.OK);
         } else {
@@ -46,15 +47,29 @@ public class StudentController {
         return entity;
     }
 
+    @GetMapping("/getStudentBySection")
+    public ResponseEntity<?> getStudentBySection( String section) throws StudentNotFound {
+        ResponseEntity<?> entity;
+        List<Student> student = studentService.findStudenyBysection(section);
+        if (!ObjectUtils.isEmpty(student)) {
+            entity = new ResponseEntity<>(student, HttpStatus.OK);
+        } else {
+            entity = new ResponseEntity<>("Student Not Found", HttpStatus.NOT_FOUND);
+        }
+        return entity;
+    }
+
+
     @PutMapping("/updateStudent/{rollno}")
     public ResponseEntity<?> updateStudent(@PathVariable int rollno, @RequestBody Student student) throws StudentNotFound {
         Student student1 = studentService.updateStudent(rollno, student);
         return new ResponseEntity<>(student1, HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteStudent/{rollno}")
-    public ResponseEntity<?> deleteStudent(@PathVariable int rollno) throws StudentNotFound {
-        String student = studentService.deleteStudent(rollno);
+    @RequestMapping("/deleteStudent/{rollno}/{section}")
+    public ResponseEntity<?> deleteStudent(@PathVariable int rollno,@PathVariable String section) throws StudentNotFound {
+        String student = studentService.deleteStudent(rollno,section);
+        System.out.println("deleted");
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
@@ -63,53 +78,36 @@ public class StudentController {
         return "registration";
     }
 
-    @RequestMapping(value = "/RegisterMe", method = RequestMethod.POST)
-    public String registerMe(StudentRequest studentRequest) {
+//    @RequestMapping(value = "/RegisterMe", method = RequestMethod.POST)
+//    public String registerMe(StudentRequest studentRequest) {
+//        studentService.createStudent(studentRequest);
+//        return "render";
+//        //blog reading third party api
+//    }
+    @RequestMapping("/RegisterMe")
+    public ModelAndView addStudent(StudentRequest studentRequest)
+    {
+        ModelAndView modelAndView=new ModelAndView("teacherWelcome");
         studentService.createStudent(studentRequest);
-        return "login";
+        modelAndView.addObject("students",studentService.getAllStudent());
+        return modelAndView;
     }
 
-    @RequestMapping ("/login")
+    @RequestMapping("/login")
     public String login(Model model) {
 
-        return "login";
+        return "hello";
     }
 
-    @RequestMapping(value = "/loginPage")
-    public String loginPage(StudentRequest studentRequest, Model model) throws StudentNotFound {
+    @RequestMapping("/loginPage")
+    public ModelAndView studentWelcome(StudentRequest studentRequest) throws StudentNotFound {
         Student student = studentService.findStudentByEmailAndPassword(studentRequest.getEmail(), studentRequest.getPassword());
-        if(!ObjectUtils.isEmpty(student)) {
-            model.addAttribute("students", studentService.getAllStudent());
-            return "render";
-        }
-        else {
-            return "login";
-        }
+
+            ModelAndView modelAndView=new ModelAndView("studentWelcome");
+            modelAndView.addObject("studentData",student);
+            modelAndView.addObject("students",studentService.findStudenyBysection(student.getSection()));
+            return modelAndView;
+
+
     }
-
-
-
-
-
-
-
-    /*public String newq(Model model)
-    {
-        model.addAttribute("students",studentService.getAllStudent());
-        return "render";
-    }*/
 }
-//find show  ->get
-//create,inject the data->post
-//t->any object
-//    @RestControllerAdvice
-//    public static class RestExceptionHandler extends ResponseEntityExceptionHandler {
-//        @Override
-//        protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-//            ErrorModel error = new ErrorModel(HttpStatus.BAD_REQUEST, "Validation Error", ex.getBindingResult().getAllErrors().iterator().next().getDefaultMessage());
-//
-//            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-//        }
-//    }
-//graphana
-//ngx deploy

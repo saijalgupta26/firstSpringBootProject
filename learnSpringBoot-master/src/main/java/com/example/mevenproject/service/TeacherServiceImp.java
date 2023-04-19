@@ -1,12 +1,14 @@
 package com.example.mevenproject.service;
 
 import com.example.mevenproject.document.Teacher;
+import com.example.mevenproject.exception.TeacherNotFound;
 import com.example.mevenproject.repository.TeacherRepository;
 import com.example.mevenproject.request.TeacherRequest;
 import com.example.mevenproject.response.TeacherResponse;
 import com.example.mevenproject.utill.TeacherTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -50,6 +52,16 @@ public class TeacherServiceImp implements TeacherService {
     public Teacher findTeacherByName(String name) {
         Optional<Teacher> teacher = teacherRepository.findTeacherByName(name);
         return teacher.orElse(null);
+    }
+
+    @Override
+    public Teacher findTeacherByEmailAndPassword(String email, String password) throws TeacherNotFound {
+        Optional<Teacher> teacher = teacherRepository.findTeacherByEmailAndPassword(email, password);
+        if(ObjectUtils.isEmpty(teacher))
+        {
+            throw new TeacherNotFound("teacher not Found");
+        }
+        return teacher.get();
     }
 
     @RequestMapping(value = "/hello")

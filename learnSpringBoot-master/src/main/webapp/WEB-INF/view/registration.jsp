@@ -1,3 +1,7 @@
+<%@ page import="com.example.mevenproject.document.Student" %>
+<%@ page import="com.example.mevenproject.service.StudentService" %>
+<%@ page import="com.example.mevenproject.service.StudentServiceImpl" %>
+<%@ page import="java.util.List" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -175,42 +179,37 @@
   </style>
 </head>
 <body>
+<%--<% StudentServiceImpl studentService=new StudentServiceImpl();
+  List<Student> allStudent = studentService.getAllStudent();
+  System.out.println(allStudent);
+%>--%>
 <div class="login-box">
 
   <h2>Register Here</h2>
   <form action="RegisterMe" method="post">
 
     <div class="user-box">
-      <input type="text" name="name" required="">
+      <input type="text" name="name" required="required">
       <label>Name</label>
     </div>
     <div class="user-box">
-      <input type="email" name="email" required="">
+      <input type="email" name="email" required="required">
       <label>email</label>
     </div>
     <div class="user-box">
-      <input type="password" name="password" required="">
+      <input type="password" name="password" required="required">
       <label>Password</label>
     </div>
     <div class="user-box">
-      <input type="text" name="section" required="">
+      <input type="text" name="section" required="required">
       <label>Section</label>
     </div>
     <div class="user-box">
-      <input type="number" name="rollno" required="">
+      <input type="number" name="rollno" required="required">
       <label>Rollno</label>
-
     </div>
-
-
-
-    <button type="submit" style="width:fit-content;height: fit-content; background-color:black; color:white; font-size:10px; ">register</button>
-
-
-
+    <button type="submit" style="width:fit-content;height: fit-content; background-color:black; color:white; font-size:10px; ">Add Data</button>
   </form>
-  <a href="studentLogin.jsp" ><button style="width:fit-content;height: fit-content; background-color:black; color:white; font-size:30px; margin-top:12px  ">sign up</button></a>
-
 </div>
 </body>
 </html>

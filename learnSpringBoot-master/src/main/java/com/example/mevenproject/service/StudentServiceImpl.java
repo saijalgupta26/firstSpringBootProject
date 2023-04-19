@@ -37,15 +37,21 @@ public class StudentServiceImpl implements StudentService {
 
 
     @Override
-    public Student findStudenyByRollno(int rollno)  {
-        Optional<Student> student = studentRepository.findByRollno(rollno);
+    public Student findStudenyByRollnoAndSection(int rollno, String section)  {
+        Optional<Student> student = studentRepository.findByRollnoAndSection(rollno,section);
         // throw new StudentNotFound("student not found");
         return student.orElse(null);
+    }
+    @Override
+    public List<Student> findStudenyBysection(String section)  {
+        List<Student> student = studentRepository.findBysection(section);
+        // throw new StudentNotFound("student not found");
+        return student;
     }
 
     @Override
     public Student updateStudent(int rollno, Student student) throws StudentNotFound {
-        Student studenyByRollno = findStudenyByRollno(rollno);
+        Student studenyByRollno = findStudenyByRollnoAndSection(rollno,student.getSection());
         if(ObjectUtils.isEmpty(studenyByRollno))
         {
             throw  new StudentNotFound("student not found exception");
@@ -57,23 +63,25 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public String deleteStudent(int rollno) throws StudentNotFound {
-        Student studenyByRollno = findStudenyByRollno(rollno);
-        if(ObjectUtils.isEmpty(studenyByRollno))
+    public String deleteStudent(int rollno,String section) throws StudentNotFound {
+        Student studeny = findStudenyByRollnoAndSection(rollno,section);
+        if(ObjectUtils.isEmpty(studeny))
         {
             throw  new StudentNotFound("student not found");
         }
-        studentRepository.delete(studenyByRollno);
+        studentRepository.delete(studeny);
         return "student delete successfully";
     }
 
     @Override
     public Student findStudentByEmailAndPassword(String email, String password) throws StudentNotFound {
         Optional<Student> student = studentRepository.findByEmailAndPassword(email, password);
+
         if(ObjectUtils.isEmpty(student)) {
             throw new StudentNotFound("student not found");
         }
         return student.get();
     }
+
 }
 

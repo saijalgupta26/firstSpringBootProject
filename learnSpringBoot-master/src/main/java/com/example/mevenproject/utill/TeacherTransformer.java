@@ -11,6 +11,7 @@ public class TeacherTransformer {
         Teacher teacher = new Teacher();
         teacher.setName(teacherRequest.getName());
         teacher.setEmail(teacherRequest.getEmail());
+        teacher.setPassword(teacherRequest.getPassword());
         return teacher;
     }
 
@@ -18,6 +19,7 @@ public class TeacherTransformer {
         TeacherResponse teacherResponse = new TeacherResponse();
         teacherResponse.setName(teacher.getName());
         teacherResponse.setEmail(teacher.getEmail());
+        teacherResponse.setPassword(teacher.getPassword());
         return teacherResponse;
     }
 }
