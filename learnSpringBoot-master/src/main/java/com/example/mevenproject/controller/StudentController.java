@@ -77,37 +77,19 @@ public class StudentController {
     public String Register() {
         return "registration";
     }
-
-//    @RequestMapping(value = "/RegisterMe", method = RequestMethod.POST)
-//    public String registerMe(StudentRequest studentRequest) {
-//        studentService.createStudent(studentRequest);
-//        return "render";
 //        //blog reading third party api
-//    }
-    @RequestMapping("/RegisterMe")
-    public ModelAndView addStudent(StudentRequest studentRequest)
-    {
-        ModelAndView modelAndView=new ModelAndView("teacherWelcome");
-        studentService.createStudent(studentRequest);
-        modelAndView.addObject("students",studentService.getAllStudent());
-        return modelAndView;
-    }
 
     @RequestMapping("/login")
     public String login(Model model) {
-
-        return "hello";
+        return "studentLogin";
     }
 
     @RequestMapping("/loginPage")
     public ModelAndView studentWelcome(StudentRequest studentRequest) throws StudentNotFound {
         Student student = studentService.findStudentByEmailAndPassword(studentRequest.getEmail(), studentRequest.getPassword());
-
             ModelAndView modelAndView=new ModelAndView("studentWelcome");
             modelAndView.addObject("studentData",student);
             modelAndView.addObject("students",studentService.findStudenyBysection(student.getSection()));
             return modelAndView;
-
-
     }
 }

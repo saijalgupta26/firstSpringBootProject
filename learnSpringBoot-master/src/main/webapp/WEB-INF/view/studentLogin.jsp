@@ -180,7 +180,7 @@
 </head>
 <body>
 <div class="login-box">
-    <h2>Login</h2>
+    <h2>Student Login</h2>
     <form action="/student/loginPage" method="post">
         <div class="user-box">
             <input type="email" name="email" required="">

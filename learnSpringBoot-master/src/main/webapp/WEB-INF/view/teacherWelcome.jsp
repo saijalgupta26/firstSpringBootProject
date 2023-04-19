@@ -67,8 +67,6 @@
       <th> Email</th>
       <th> delete</th>
       <th>Update</th>
-
-      <!-- <th> Branch </th>-->
     </tr>
     </thead>
     <%

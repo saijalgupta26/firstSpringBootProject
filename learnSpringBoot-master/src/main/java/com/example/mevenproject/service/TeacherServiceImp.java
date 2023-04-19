@@ -64,9 +64,5 @@ public class TeacherServiceImp implements TeacherService {
         return teacher.get();
     }
 
-    @RequestMapping(value = "/hello")
-    public String hello() {
-        return "registration";
-    }
 
 }

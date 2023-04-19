@@ -20,6 +20,6 @@ public interface StudentService {
     String deleteStudent(int rollno,String section) throws StudentNotFound;
 
     Student findStudentByEmailAndPassword(String email,String password) throws StudentNotFound;
-   List<Student> findStudenyBysection(String section);
+    List<Student> findStudenyBysection(String section);
 
 }

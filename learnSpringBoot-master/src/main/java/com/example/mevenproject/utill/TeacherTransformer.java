@@ -14,7 +14,6 @@ public class TeacherTransformer {
         teacher.setPassword(teacherRequest.getPassword());
         return teacher;
     }
-
     public TeacherResponse prepareTeacher(Teacher teacher) {
         TeacherResponse teacherResponse = new TeacherResponse();
         teacherResponse.setName(teacher.getName());

@@ -7,6 +7,7 @@ public class StudentNotFound extends Exception {
     private static final long serialVersionUID = 1L;
     public StudentNotFound(String error){
         super(error);
+        //COMPILE TI,=ME EXCEPTION
     }
 
 }

@@ -186,7 +186,7 @@
 <div class="login-box">
 
   <h2>Register Here</h2>
-  <form action="RegisterMe" method="post">
+  <form action="/teacher/addStudent" method="post">
 
     <div class="user-box">
       <input type="text" name="name" required="required">

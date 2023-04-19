@@ -16,7 +16,6 @@ public class Trasnformer {
         student.setRollno(studentRequest.getRollno());
         return student;
     }
-
     public StudentResponse prepareStudentResponse(Student student) {
         StudentResponse studentResponse = new StudentResponse();
         studentResponse.setName(student.getName());
@@ -25,6 +24,5 @@ public class Trasnformer {
         studentResponse.setSection(student.getSection());
         studentResponse.setRollno(student.getRollno());
         return studentResponse;
-
     }
 }
