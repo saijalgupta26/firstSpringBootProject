@@ -60,11 +60,11 @@ public class StudentController {
     }
 
 
-    @PutMapping("/updateStudent/{rollno}")
-    public ResponseEntity<?> updateStudent(@PathVariable int rollno, @RequestBody Student student) throws StudentNotFound {
-        Student student1 = studentService.updateStudent(rollno, student);
+    /*@RequestMapping("/updateStudent1/")
+    public ResponseEntity<?> updateStudent(Student student) throws StudentNotFound {
+        Student student1 = studentService.updateStudent(student.getRollno(),student.getSection(), student);
         return new ResponseEntity<>(student1, HttpStatus.OK);
-    }
+    }*/
 
     @RequestMapping("/deleteStudent/{rollno}/{section}")
     public ResponseEntity<?> deleteStudent(@PathVariable int rollno,@PathVariable String section) throws StudentNotFound {
@@ -92,4 +92,19 @@ public class StudentController {
             modelAndView.addObject("students",studentService.findStudenyBysection(student.getSection()));
             return modelAndView;
     }
+    @RequestMapping("/updateStudent/{rollno}/{section}")
+    public ModelAndView updateStudent1(@PathVariable int rollno,@PathVariable String section)
+    {
+        ModelAndView modelAndView=new ModelAndView("update-student");
+        return modelAndView;
+
+    }
+    @RequestMapping ("/updateStudent1")
+    public ModelAndView updateData(Student student) throws StudentNotFound {
+        Student student1 = studentService.updateStudent(student.getRollno(),student.getSection(), student);
+        ModelAndView modelAndView =new ModelAndView("teacherWelcome");
+        modelAndView.addObject("students",studentService.getAllStudent());
+        return modelAndView;
+    }
 }
+//delete

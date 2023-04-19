@@ -45,22 +45,22 @@ public class StudentServiceTest {
     @Test
     public void deleteStudentTest() {
         //Mockito.when(studentRepository.findByRollno(Mockito.anyInt())).thenReturn(Optional.of(MockObject.getStudent()));
-        assertThatCode(()->studentService.deleteStudent(Mockito.anyInt())).isInstanceOf(StudentNotFound.class);
+        assertThatCode(()->studentService.deleteStudent(Mockito.anyInt(),Mockito.any())).isInstanceOf(StudentNotFound.class);
     }
     @Test
     public void deleteStudentTest_Success() {
-        Mockito.when(studentRepository.findByRollno(Mockito.anyInt())).thenReturn(Optional.of(MockObject.getStudent()));
-        assertThatCode(() -> studentService.deleteStudent(Mockito.anyInt())).doesNotThrowAnyException();
+        Mockito.when(studentRepository.findByRollnoAndSection(Mockito.anyInt(),Mockito.any())).thenReturn(Optional.of(MockObject.getStudent()));
+        assertThatCode(() -> studentService.deleteStudent(Mockito.anyInt(),Mockito.any())).doesNotThrowAnyException();
     }
     @Test
     public void updateStudentTest_Success() {
-        Mockito.when(studentRepository.findByRollno(Mockito.anyInt())).thenReturn(Optional.of(MockObject.getStudent()));
-        assertThatCode(()->studentService.updateStudent(Mockito.anyInt(),MockObject.getStudent())).doesNotThrowAnyException();
+        Mockito.when(studentRepository.findByRollnoAndSection(Mockito.anyInt(),Mockito.any())).thenReturn(Optional.of(MockObject.getStudent()));
+        assertThatCode(()->studentService.updateStudent(Mockito.anyInt(),Mockito.any(),MockObject.getStudent())).doesNotThrowAnyException();
     }
     @Test
     public void updateStudentTest_InvalidRequest() {
         //Mockito.when(studentRepository.findByRollno(Mockito.anyInt())).thenReturn(Optional.of(MockObject.getStudent()));
-        assertThatCode(()->studentService.updateStudent(Mockito.anyInt(),MockObject.getStudent())).isInstanceOf(StudentNotFound.class);
+        assertThatCode(()->studentService.updateStudent(Mockito.anyInt(),Mockito.any(),MockObject.getStudent())).isInstanceOf(StudentNotFound.class);
 
     }
 
@@ -72,8 +72,8 @@ public class StudentServiceTest {
     }
     @Test
     public void getStudentByRollnoTest(){
-        Mockito.when(studentRepository.findByRollno(Mockito.anyInt())).thenReturn(Optional.of(MockObject.getStudent()));
-        assertThatCode(()->studentService.findStudenyByRollno(Mockito.anyInt())).doesNotThrowAnyException();
+        Mockito.when(studentRepository.findByRollnoAndSection(Mockito.anyInt(),Mockito.any())).thenReturn(Optional.of(MockObject.getStudent()));
+        assertThatCode(()->studentService.findStudenyByRollnoAndSection(Mockito.anyInt(),Mockito.any())).doesNotThrowAnyException();
 
     }
 }

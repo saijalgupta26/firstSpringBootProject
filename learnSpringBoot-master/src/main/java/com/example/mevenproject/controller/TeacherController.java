@@ -86,5 +86,12 @@ public class TeacherController {
         return modelAndView;
     }
 
+    @RequestMapping("/update")
+    public ModelAndView updateStudent()
+    {
+        ModelAndView modelAndView=new ModelAndView("update-student");
+        return modelAndView;
+    }
+
 }
 

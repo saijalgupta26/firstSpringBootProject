@@ -50,9 +50,9 @@
       <li class="nav-item">
         <a class="nav-link" href="http://localhost:9192/student/register">AddStudent</a>
       </li>
-      <li class="nav-item active" style="padding-left: 640px;">
+      <%--<li class="nav-item active" style="padding-left: 640px;">
         <a class="nav-link" href="#">Welcome<br> <%=teacher.getName()%> <span class="sr-only"></span></a>
-      </li>
+      </li>--%>
 
     </ul>
   </div>
@@ -81,6 +81,7 @@
       <td><span > <%=students.get(i).getEmail()%></span></td>
       <td><a href="http://localhost:9192/student/deleteStudent/<%=students.get(i).getRollno()%>/<%=students.get(i).getSection()%>">delete</a></td>
       <%--<td><a href="http://localhost:9192/student/updateStudent/<%=students.get(i).getRollno()%>/<%=students.get(i).getSection()%>">update</a></td>--%>
+      <td> <a href="http://localhost:9192/student/updateStudent/<%=students.get(i).getRollno()%>/<%=students.get(i).getSection()%>">update</a></td>
     </tr>
     <%}%>
 

@@ -15,7 +15,7 @@ public interface StudentService {
 
     Student findStudenyByRollnoAndSection(int rollno,String section);
 
-    Student updateStudent(int rollno, Student student) throws StudentNotFound;
+    Student updateStudent(int rollno,String section, Student student) throws StudentNotFound;
 
     String deleteStudent(int rollno,String section) throws StudentNotFound;
 

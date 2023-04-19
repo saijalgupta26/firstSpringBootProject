@@ -50,8 +50,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student updateStudent(int rollno, Student student) throws StudentNotFound {
-        Student studenyByRollno = findStudenyByRollnoAndSection(rollno,student.getSection());
+    public Student updateStudent(int rollno,String section, Student student) throws StudentNotFound {
+        Student studenyByRollno = findStudenyByRollnoAndSection(rollno,section);
         if(ObjectUtils.isEmpty(studenyByRollno))
         {
             throw  new StudentNotFound("student not found exception");
