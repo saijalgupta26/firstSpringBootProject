@@ -69,7 +69,6 @@ public class StudentController {
     @RequestMapping("/deleteStudent/{rollno}/{section}")
     public ResponseEntity<?> deleteStudent(@PathVariable int rollno,@PathVariable String section) throws StudentNotFound {
         String student = studentService.deleteStudent(rollno,section);
-        System.out.println("deleted");
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
@@ -83,19 +82,40 @@ public class StudentController {
     public String login(Model model) {
         return "studentLogin";
     }
+    @RequestMapping("/addStudent")
+    public ModelAndView addStudent(StudentRequest studentRequest)
+    {
+
+        ModelAndView modelAndView=new ModelAndView("teacherWelcome");
+        studentService.createStudent(studentRequest);
+
+        modelAndView.addObject("students",studentService.getAllStudent());
+
+        return modelAndView;
+    }
 
     @RequestMapping("/loginPage")
     public ModelAndView studentWelcome(StudentRequest studentRequest) throws StudentNotFound {
         Student student = studentService.findStudentByEmailAndPassword(studentRequest.getEmail(), studentRequest.getPassword());
+        if(!ObjectUtils.isEmpty(student))
+        {
             ModelAndView modelAndView=new ModelAndView("studentWelcome");
             modelAndView.addObject("studentData",student);
             modelAndView.addObject("students",studentService.findStudenyBysection(student.getSection()));
             return modelAndView;
+        }
+        else {
+            ModelAndView modelAndView=new ModelAndView("studentLogin");
+            return modelAndView;
+        }
     }
+
     @RequestMapping("/updateStudent/{rollno}/{section}")
     public ModelAndView updateStudent1(@PathVariable int rollno,@PathVariable String section)
     {
+        Student student = studentService.findStudenyByRollnoAndSection(rollno, section);
         ModelAndView modelAndView=new ModelAndView("update-student");
+        modelAndView.addObject("updatingStudent",student);
         return modelAndView;
 
     }

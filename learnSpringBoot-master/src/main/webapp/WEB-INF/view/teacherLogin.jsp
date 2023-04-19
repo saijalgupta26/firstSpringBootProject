@@ -13,6 +13,15 @@
       background: linear-gradient(#141e30, #243b55);
     }
 
+
+    .h1, h1 {
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      line-height: 1.2;
+      color: #ced4da;
+    }
+
     .login-box {
       position: absolute;
       top: 50%;
@@ -174,6 +183,7 @@
 </head>
 <body>
 <div class="login-box">
+
   <h2>Teacher Login</h2>
   <form action="/teacher/loginPage" method="post">
     <div class="user-box">
@@ -184,7 +194,8 @@
       <input type="password" name="password" required="">
       <label>Password</label>
     </div>
-    <button type="submit" style="height:fit-content; width:fit-content; background-color:black; color:white; font-size:10px; ">submit</button>
+    <button type="submit" style="height:fit-content; width:fit-content; background-color:black; color:white; font-size:10px; ">submit</button><br><br>
+    <a href="http://localhost:9192/student/login" style="color: white">student login?click here</a>
   </form>
 
 </div>

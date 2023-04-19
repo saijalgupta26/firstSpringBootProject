@@ -156,7 +156,6 @@
                 right: 100%;
             }
         }
-
         .login-box button span:nth-child(4) {
             bottom: -100%;
             left: 0;

@@ -185,8 +185,8 @@
 %>--%>
 <div class="login-box">
 
-  <h2>Register Here</h2>
-  <form action="/teacher/addStudent/" method="post">
+  <h2>Add Student</h2>
+  <form action="/student/addStudent" method="post">
 
     <div class="user-box">
       <input type="text" name="name" required="required">

@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.example.mevenproject.document.Student" %><%--
   Created by IntelliJ IDEA.
   User: saijal.gupta
   Date: 4/19/2023
@@ -183,13 +183,10 @@
     </style>
 </head>
 <body>
-<%--<% StudentServiceImpl studentService=new StudentServiceImpl();
-  List<Student> allStudent = studentService.getAllStudent();
-  System.out.println(allStudent);
-%>--%>
-<div class="login-box">
+<% Student student= (Student) request.getAttribute("updatingStudent");
+%>
 
-    <h2>Register Here</h2>
+<div class="login-box">
     <form action="/student/updateStudent1" method="post">
 
         <div class="user-box">
@@ -200,16 +197,13 @@
             <input type="email" name="email" required="required">
             <label>email</label>
         </div>
+
         <div class="user-box">
-            <input type="password" name="password" required="required">
-            <label>Password</label>
-        </div>
-        <div class="user-box">
-            <input type="text" name="section" required="required">
+            <input type="text" name="section" required="required" readonly="readonly" value="<%= student.getSection()%>">
             <label>Section</label>
         </div>
         <div class="user-box">
-            <input type="number" name="rollno" required="required">
+            <input type="number" name="rollno" required="required" readonly="readonly" value="<%=student.getRollno()%>">
             <label>Rollno</label>
         </div>
         <button type="submit" style="width:fit-content;height: fit-content; background-color:black; color:white; font-size:10px; ">save</button>

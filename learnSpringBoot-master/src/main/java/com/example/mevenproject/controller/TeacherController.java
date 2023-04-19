@@ -1,6 +1,7 @@
 package com.example.mevenproject.controller;
 
 import com.example.mevenproject.document.Teacher;
+import com.example.mevenproject.exception.StudentNotFound;
 import com.example.mevenproject.exception.TeacherNotFound;
 import com.example.mevenproject.request.StudentRequest;
 import com.example.mevenproject.request.TeacherRequest;
@@ -71,27 +72,25 @@ public class TeacherController {
     @RequestMapping("/loginPage")
     public ModelAndView teacherWelcome(TeacherRequest teacherRequest) throws TeacherNotFound {
         Teacher teacher = teacherService.findTeacherByEmailAndPassword(teacherRequest.getEmail(), teacherRequest.getPassword());
+        if(!ObjectUtils.isEmpty(teacher))
+        {
+            ModelAndView modelAndView=new ModelAndView("teacherWelcome");
+            modelAndView.addObject("teacherData",teacher);
+            modelAndView.addObject("students",studentService.getAllStudent());
+            return modelAndView;
+        }
+        else{
+            ModelAndView modelAndView=new ModelAndView("teacherLogin");
+            return modelAndView;
+        }
+    }
+    @RequestMapping("/deleteStudent")
+    public ModelAndView deleteStudent(@RequestParam int rollno,@RequestParam String section) throws StudentNotFound {
+        studentService.deleteStudent(rollno,section);
         ModelAndView modelAndView=new ModelAndView("teacherWelcome");
-        modelAndView.addObject("teacherData",teacher);
         modelAndView.addObject("students",studentService.getAllStudent());
         return modelAndView;
-    }
 
-    @RequestMapping("/addStudent")
-    public ModelAndView addStudent(StudentRequest studentRequest)
-    {
-        ModelAndView modelAndView=new ModelAndView("teacherWelcome");
-        studentService.createStudent(studentRequest);
-        modelAndView.addObject("students",studentService.getAllStudent());
-        return modelAndView;
     }
-
-    @RequestMapping("/update")
-    public ModelAndView updateStudent()
-    {
-        ModelAndView modelAndView=new ModelAndView("update-student");
-        return modelAndView;
-    }
-
 }
 

@@ -5,7 +5,7 @@ import com.example.mevenproject.request.StudentRequest;
 import lombok.Data;
 
 @Data
-public class MockObject {
+public class MockObjectStudent {
     public static StudentRequest getStudentRequest(){
         StudentRequest studentRequest=new StudentRequest();
         studentRequest.setName("text");

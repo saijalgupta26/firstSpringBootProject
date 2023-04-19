@@ -28,10 +28,10 @@ public class StudentServiceTest {
 
     @Test
     public void createStudentTest() {
-        Mockito.when(trasnformer.transformStudent(Mockito.any())).thenReturn(MockObject.getStudent());
-        Mockito.when(studentRepository.save(Mockito.any())).thenReturn(MockObject.getStudent());
+        Mockito.when(trasnformer.transformStudent(Mockito.any())).thenReturn(MockObjectStudent.getStudent());
+        Mockito.when(studentRepository.save(Mockito.any())).thenReturn(MockObjectStudent.getStudent());
         assertThatCode(() -> {
-            studentService.createStudent(MockObject.getStudentRequest());
+            studentService.createStudent(MockObjectStudent.getStudentRequest());
         }).doesNotThrowAnyException();
     }
     @Test
@@ -49,30 +49,30 @@ public class StudentServiceTest {
     }
     @Test
     public void deleteStudentTest_Success() {
-        Mockito.when(studentRepository.findByRollnoAndSection(Mockito.anyInt(),Mockito.any())).thenReturn(Optional.of(MockObject.getStudent()));
+        Mockito.when(studentRepository.findByRollnoAndSection(Mockito.anyInt(),Mockito.any())).thenReturn(Optional.of(MockObjectStudent.getStudent()));
         assertThatCode(() -> studentService.deleteStudent(Mockito.anyInt(),Mockito.any())).doesNotThrowAnyException();
     }
     @Test
     public void updateStudentTest_Success() {
-        Mockito.when(studentRepository.findByRollnoAndSection(Mockito.anyInt(),Mockito.any())).thenReturn(Optional.of(MockObject.getStudent()));
-        assertThatCode(()->studentService.updateStudent(Mockito.anyInt(),Mockito.any(),MockObject.getStudent())).doesNotThrowAnyException();
+        Mockito.when(studentRepository.findByRollnoAndSection(Mockito.anyInt(),Mockito.any())).thenReturn(Optional.of(MockObjectStudent.getStudent()));
+        assertThatCode(()->studentService.updateStudent(Mockito.anyInt(),Mockito.any(), MockObjectStudent.getStudent())).doesNotThrowAnyException();
     }
     @Test
     public void updateStudentTest_InvalidRequest() {
         //Mockito.when(studentRepository.findByRollno(Mockito.anyInt())).thenReturn(Optional.of(MockObject.getStudent()));
-        assertThatCode(()->studentService.updateStudent(Mockito.anyInt(),Mockito.any(),MockObject.getStudent())).isInstanceOf(StudentNotFound.class);
+        assertThatCode(()->studentService.updateStudent(Mockito.anyInt(),Mockito.any(), MockObjectStudent.getStudent())).isInstanceOf(StudentNotFound.class);
 
     }
 
     @Test
     public void getAllStudentTest() {
-        List<Student> student = List.of(MockObject.getStudent());
+        List<Student> student = List.of(MockObjectStudent.getStudent());
         Mockito.when(studentRepository.findAll()).thenReturn(student);
         assertThatCode(() -> studentService.getAllStudent()).doesNotThrowAnyException();
     }
     @Test
     public void getStudentByRollnoTest(){
-        Mockito.when(studentRepository.findByRollnoAndSection(Mockito.anyInt(),Mockito.any())).thenReturn(Optional.of(MockObject.getStudent()));
+        Mockito.when(studentRepository.findByRollnoAndSection(Mockito.anyInt(),Mockito.any())).thenReturn(Optional.of(MockObjectStudent.getStudent()));
         assertThatCode(()->studentService.findStudenyByRollnoAndSection(Mockito.anyInt(),Mockito.any())).doesNotThrowAnyException();
 
     }
