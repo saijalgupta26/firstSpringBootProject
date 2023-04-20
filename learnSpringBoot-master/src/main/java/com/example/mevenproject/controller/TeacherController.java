@@ -87,15 +87,15 @@ public class TeacherController {
             return modelAndView;
         }
     }
-    /*@RequestMapping("/deleteStudent")
+    @RequestMapping("/deleteStudent")
     public ModelAndView deleteStudent(@RequestParam int rollno,@RequestParam String section) throws StudentNotFound {
         studentService.deleteStudent(rollno,section);
         ModelAndView modelAndView=new ModelAndView("teacherWelcome");
         modelAndView.addObject("students",studentService.getAllStudent());
         return modelAndView;
 
-    }*/
-    @RequestMapping("/deleteStudent")
+    }
+   /* @RequestMapping("/deleteStudent")
     public RedirectView deleteqwqw(@RequestParam int rollno, @RequestParam String section, RedirectAttributes attributes) throws StudentNotFound
     {
         studentService.deleteStudent(rollno,section);
@@ -108,5 +108,5 @@ public class TeacherController {
 
 
     }
-}
+*/}
 
