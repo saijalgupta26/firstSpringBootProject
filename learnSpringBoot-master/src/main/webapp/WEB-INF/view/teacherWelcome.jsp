@@ -79,7 +79,7 @@
       <td><span > <%=students.get(i).getRollno()%></span></td>
       <td><span > <%=students.get(i).getSection()%></span></td>
       <td><span > <%=students.get(i).getEmail()%></span></td>
-      <td><a href="http://localhost:9192/teacher/deleteStudent?rollno=<%=students.get(i).getRollno()%>&section=<%=students.get(i).getSection()%>">delete</a></td>
+      <td><a href="/teacher/deleteStudent?rollno=<%=students.get(i).getRollno()%>&section=<%=students.get(i).getSection()%>">delete</a></td>
       <%--<td><a href="http://localhost:9192/student/updateStudent/<%=students.get(i).getRollno()%>/<%=students.get(i).getSection()%>">update</a></td>--%>
       <%--?productID=<%=products.get(i).getProductID()--%>
       <td> <a href="http://localhost:9192/student/updateStudent/<%=students.get(i).getRollno()%>/<%=students.get(i).getSection()%>">update</a></td>
