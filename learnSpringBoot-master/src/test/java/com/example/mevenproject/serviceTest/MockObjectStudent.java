@@ -2,6 +2,7 @@ package com.example.mevenproject.serviceTest;
 
 import com.example.mevenproject.document.Student;
 import com.example.mevenproject.request.StudentRequest;
+import com.example.mevenproject.response.StudentResponse;
 import lombok.Data;
 
 @Data
@@ -23,6 +24,15 @@ public class MockObjectStudent {
         student.setSection("AS");
         student.setPassword("er@eE$23rere");
         return student;
+    }
+    public static StudentResponse studentResponse(){
+        StudentResponse studentResponse=new StudentResponse();
+        studentResponse.setName(getStudent().getName());
+        studentResponse.setRollno(getStudent().getRollno());
+        studentResponse.setEmail(getStudent().getEmail());
+        studentResponse.setSection(getStudent().getSection());
+        studentResponse.setPassword(studentResponse.getPassword());
+        return studentResponse;
     }
     //create mock method for studentRequest
     //object studenntRequest

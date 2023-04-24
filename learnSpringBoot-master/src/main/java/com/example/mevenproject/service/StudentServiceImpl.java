@@ -25,8 +25,8 @@ public class StudentServiceImpl implements StudentService {
         }
         Student student = trasnformer.transformStudent(studentRequest);
         Student student1 = studentRepository.save(student);
-        Optional<Student> login = studentRepository.findByEmailAndPassword(studentRequest.getEmail(), studentRequest.getName());
-        System.out.println(login.isPresent());
+       /* *//**//*Optional<Student> login = studentRepository.findByEmailAndPassword(studentRequest.getEmail(), studentRequest.getName());*/
+        /*System.out.println(login.isPresent());*/
         return trasnformer.prepareStudentResponse(student1);
     }
 
