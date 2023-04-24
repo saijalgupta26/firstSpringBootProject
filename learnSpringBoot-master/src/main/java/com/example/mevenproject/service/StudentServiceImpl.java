@@ -20,6 +20,7 @@ public class StudentServiceImpl implements StudentService {
     private Trasnformer trasnformer;
 
     public StudentResponse createStudent(StudentRequest studentRequest) {
+        //insert student data
         if (ObjectUtils.isEmpty(studentRequest) ) {
             return null;
         }

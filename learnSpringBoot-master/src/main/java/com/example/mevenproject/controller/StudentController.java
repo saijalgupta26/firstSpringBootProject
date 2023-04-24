@@ -13,8 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -26,17 +28,17 @@ public class StudentController {
     @PostMapping("/createStudent")
     public ResponseEntity<?> createStudent(@Valid @RequestBody StudentRequest studentRequest) {
         StudentResponse student1 = studentService.createStudent(studentRequest);
-        return new ResponseEntity<>(student1, HttpStatus.CREATED);
+        return new ResponseEntity<>(student1, HttpStatus.CREATED); //create student data by using postman
     }
 
     @GetMapping("/getAllStudent")
     public ResponseEntity<?> getAllStudent() {
         List<Student> allStudent = studentService.getAllStudent();
-        return new ResponseEntity<>(allStudent, HttpStatus.OK);
+        return new ResponseEntity<>(allStudent, HttpStatus.OK); // get all student
     }
 
-    @GetMapping("/getStudentByRollno")
-    public ResponseEntity<?> getStudentByRollno(@RequestParam int rollno,@RequestParam String section) throws StudentNotFound {
+    @GetMapping("/getStudentByRollnoAndSection")
+    public ResponseEntity<?> getStudentByRollnoAndSection(@RequestParam int rollno,@RequestParam String section) throws StudentNotFound {
         ResponseEntity<?> entity;
         Student student = studentService.findStudenyByRollnoAndSection(rollno,section);
         if (!ObjectUtils.isEmpty(student)) {
@@ -44,11 +46,11 @@ public class StudentController {
         } else {
             entity = new ResponseEntity<>("Student Not Found", HttpStatus.NOT_FOUND);
         }
-        return entity;
+        return entity;// find student by rollno and section
     }
 
-    @GetMapping("/getStudentBySection")
-    public ResponseEntity<?> getStudentBySection( String section) throws StudentNotFound {
+    @GetMapping("/getStudentsBySection")
+    public ResponseEntity<?> getStudentsBySection( String section) throws StudentNotFound {
         ResponseEntity<?> entity;
         List<Student> student = studentService.findStudenyBysection(section);
         if (!ObjectUtils.isEmpty(student)) {
@@ -56,7 +58,7 @@ public class StudentController {
         } else {
             entity = new ResponseEntity<>("Student Not Found", HttpStatus.NOT_FOUND);
         }
-        return entity;
+        return entity;  //get all student those have same section
     }
 
 
@@ -69,29 +71,27 @@ public class StudentController {
     @RequestMapping("/deleteStudent/{rollno}/{section}")
     public ResponseEntity<?> deleteStudent(@PathVariable int rollno,@PathVariable String section) throws StudentNotFound {
         String student = studentService.deleteStudent(rollno,section);
-        return new ResponseEntity<>(student, HttpStatus.OK);
+        return new ResponseEntity<>(student, HttpStatus.OK);  //delete Student by rollno and section
     }
 
     @GetMapping("/register")
-    public String Register() {
+    public String addStudent() {
         return "registration";
-    }
+    } // add student page
 //        //blog reading third party api
 
     @RequestMapping("/login")
     public String login(Model model) {
-        return "studentLogin";
+        return "studentLogin"; //student login page
     }
     @RequestMapping("/addStudent")
     public ModelAndView addStudent(StudentRequest studentRequest)
     {
-
         ModelAndView modelAndView=new ModelAndView("teacherWelcome");
         studentService.createStudent(studentRequest);
-
         modelAndView.addObject("students",studentService.getAllStudent());
-
         return modelAndView;
+        //add student data and return back to teacher  welcome page
     }
 
     @RequestMapping("/loginPage")
@@ -103,10 +103,12 @@ public class StudentController {
             modelAndView.addObject("studentData",student);
             modelAndView.addObject("students",studentService.findStudenyBysection(student.getSection()));
             return modelAndView;
+            // student login page if id password is correct then return to student welcome page
         }
         else {
             ModelAndView modelAndView=new ModelAndView("studentLogin");
             return modelAndView;
+            // if password mismatch than return again login page
         }
     }
 
@@ -116,7 +118,7 @@ public class StudentController {
         Student student = studentService.findStudenyByRollnoAndSection(rollno, section);
         ModelAndView modelAndView=new ModelAndView("update-student");
         modelAndView.addObject("updatingStudent",student);
-        return modelAndView;
+        return modelAndView;// finf student  by using rollno and section and repopulated student form
 
     }
     @RequestMapping ("/updateStudent1")
@@ -124,7 +126,29 @@ public class StudentController {
         Student student1 = studentService.updateStudent(student.getRollno(),student.getSection(), student);
         ModelAndView modelAndView =new ModelAndView("teacherWelcome");
         modelAndView.addObject("students",studentService.getAllStudent());
-        return modelAndView;
+        return modelAndView; //update student details
     }
+    @GetMapping("/1")
+    public ResponseEntity<?> getTeacherInStudent()
+    {
+        String url="http://localhost:9192/teacher/getAll";
+        RestTemplate restTemplate=new RestTemplate();
+        Object[] countries=restTemplate.getForObject(url,Object[].class);
+
+        return new ResponseEntity<>(countries,HttpStatus.OK); //use external api
+    }
+
+    @GetMapping("/countries")
+    public ResponseEntity<?> countries()
+    {
+        /*String url="https://restcountries.eu/rest/v2/all";*/
+        String url="https://docs.bmc.com/docs/ars1911/calling-third-party-rest-apis-in-a-remedy-application-896322247.html";
+
+        RestTemplate restTemplate=new RestTemplate();
+        Object countries=restTemplate.getMessageConverters();
+        return new ResponseEntity<>(countries,HttpStatus.OK);
+    }
+
+
 }
 //delete
