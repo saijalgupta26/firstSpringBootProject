@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -38,7 +37,7 @@ public class StudentController {
     }
 
     @GetMapping("/getStudentByRollnoAndSection")
-    public ResponseEntity<?> getStudentByRollnoAndSection(@RequestParam int rollno,@RequestParam String section) throws StudentNotFound {
+    public ResponseEntity<?> getStudentByRollnoAndSection(@RequestParam int rollno,@RequestParam String section) {
         ResponseEntity<?> entity;
         Student student = studentService.findStudenyByRollnoAndSection(rollno,section);
         if (!ObjectUtils.isEmpty(student)) {
@@ -50,7 +49,7 @@ public class StudentController {
     }
 
     @GetMapping("/getStudentsBySection")
-    public ResponseEntity<?> getStudentsBySection( String section) throws StudentNotFound {
+    public ResponseEntity<?> getStudentsBySection( String section) {
         ResponseEntity<?> entity;
         List<Student> student = studentService.findStudenyBysection(section);
         if (!ObjectUtils.isEmpty(student)) {
@@ -61,23 +60,12 @@ public class StudentController {
         return entity;  //get all student those have same section
     }
 
-
-    /*@RequestMapping("/updateStudent1/")
-    public ResponseEntity<?> updateStudent(Student student) throws StudentNotFound {
-        Student student1 = studentService.updateStudent(student.getRollno(),student.getSection(), student);
-        return new ResponseEntity<>(student1, HttpStatus.OK);
-    }*/
-
     @RequestMapping("/deleteStudent/{rollno}/{section}")
     public ResponseEntity<?> deleteStudent(@PathVariable int rollno,@PathVariable String section) throws StudentNotFound {
         String student = studentService.deleteStudent(rollno,section);
         return new ResponseEntity<>(student, HttpStatus.OK);  //delete Student by rollno and section
     }
 
-    @GetMapping("/register")
-    public String addStudent() {
-        return "registration";
-    } // add student page
 //        //blog reading third party api
 
     @RequestMapping("/login")
@@ -106,8 +94,7 @@ public class StudentController {
             // student login page if id password is correct then return to student welcome page
         }
         else {
-            ModelAndView modelAndView=new ModelAndView("studentLogin");
-            return modelAndView;
+            return new ModelAndView("studentLogin");
             // if password mismatch than return again login page
         }
     }
@@ -118,12 +105,12 @@ public class StudentController {
         Student student = studentService.findStudenyByRollnoAndSection(rollno, section);
         ModelAndView modelAndView=new ModelAndView("update-student");
         modelAndView.addObject("updatingStudent",student);
-        return modelAndView;// finf student  by using rollno and section and repopulated student form
+        return modelAndView;// find student  by using roll and section and repopulated student form
 
     }
     @RequestMapping ("/updateStudent1")
     public ModelAndView updateData(Student student) throws StudentNotFound {
-        Student student1 = studentService.updateStudent(student.getRollno(),student.getSection(), student);
+        studentService.updateStudent(student.getRollno(),student.getSection(), student);
         ModelAndView modelAndView =new ModelAndView("teacherWelcome");
         modelAndView.addObject("students",studentService.getAllStudent());
         return modelAndView; //update student details
@@ -141,12 +128,20 @@ public class StudentController {
     @GetMapping("/countries")
     public ResponseEntity<?> countries()
     {
-        /*String url="https://restcountries.eu/rest/v2/all";*/
-        String url="https://docs.bmc.com/docs/ars1911/calling-third-party-rest-apis-in-a-remedy-application-896322247.html";
+
+       // String url="https://docs.bmc.com/docs/ars1911/calling-third-party-rest-apis-in-a-remedy-application-896322247.html";
 
         RestTemplate restTemplate=new RestTemplate();
         Object countries=restTemplate.getMessageConverters();
         return new ResponseEntity<>(countries,HttpStatus.OK);
+    }
+    @PatchMapping("updateEmail/{rollno}/{section}")
+    public ResponseEntity<?> patchStudent(@PathVariable int rollno,@PathVariable String section,@RequestBody Student student) throws StudentNotFound {
+
+
+        Student student1 = studentService.patchStudent(rollno, section, student);
+
+        return new ResponseEntity<>(student1,HttpStatus.ACCEPTED);
     }
 
 

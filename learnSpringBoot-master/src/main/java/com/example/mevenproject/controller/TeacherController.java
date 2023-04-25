@@ -3,13 +3,11 @@ package com.example.mevenproject.controller;
 import com.example.mevenproject.document.Teacher;
 import com.example.mevenproject.exception.StudentNotFound;
 import com.example.mevenproject.exception.TeacherNotFound;
-import com.example.mevenproject.request.StudentRequest;
 import com.example.mevenproject.request.TeacherRequest;
 import com.example.mevenproject.response.TeacherResponse;
 import com.example.mevenproject.service.StudentService;
 import com.example.mevenproject.service.TeacherService;
 import jakarta.validation.Valid;
-import org.apache.jasper.tagplugins.jstl.core.Redirect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -83,8 +79,7 @@ public class TeacherController {
             return modelAndView;
         }
         else{
-            ModelAndView modelAndView=new ModelAndView("teacherLogin");
-            return modelAndView;
+            return new ModelAndView("teacherLogin");
         }
     }
     @RequestMapping("/deleteStudent")
@@ -93,20 +88,6 @@ public class TeacherController {
         ModelAndView modelAndView=new ModelAndView("teacherWelcome");
         modelAndView.addObject("students",studentService.getAllStudent());
         return modelAndView;
-
     }
-   /* @RequestMapping("/deleteStudent")
-    public RedirectView deleteqwqw(@RequestParam int rollno, @RequestParam String section, RedirectAttributes attributes) throws StudentNotFound
-    {
-        studentService.deleteStudent(rollno,section);
-        RedirectView redirectView=new RedirectView();
-        redirectView.setUrl("http://localhost:9192/teacher/login");
-        attributes.addFlashAttribute("students",studentService.getAllStudent());
-
-
-        return redirectView;
-
-
-    }
-*/}
+}
 

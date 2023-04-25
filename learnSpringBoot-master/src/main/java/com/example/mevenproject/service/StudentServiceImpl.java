@@ -26,8 +26,6 @@ public class StudentServiceImpl implements StudentService {
         }
         Student student = trasnformer.transformStudent(studentRequest);
         Student student1 = studentRepository.save(student);
-       /* *//**//*Optional<Student> login = studentRepository.findByEmailAndPassword(studentRequest.getEmail(), studentRequest.getName());*/
-        /*System.out.println(login.isPresent());*/
         return trasnformer.prepareStudentResponse(student1);
     }
 
@@ -40,15 +38,25 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student findStudenyByRollnoAndSection(int rollno, String section)  {
         Optional<Student> student = studentRepository.findByRollnoAndSection(rollno,section);
-        // throw new StudentNotFound("student not found");
         return student.orElse(null);
     }
     @Override
     public List<Student> findStudenyBysection(String section)  {
-        List<Student> student = studentRepository.findBysection(section);
-        // throw new StudentNotFound("student not found");
-        return student;
+        return studentRepository.findBysection(section);
     }
+
+    @Override
+    public Student patchStudent(int rollno, String section,Student student) throws StudentNotFound {
+        Student studenyByRollno = findStudenyByRollnoAndSection(rollno,section);
+        if(ObjectUtils.isEmpty(studenyByRollno))
+        {
+            throw  new StudentNotFound("student not found exception");
+        }
+        studenyByRollno.setEmail(student.getEmail());
+        return studentRepository.save(studenyByRollno);
+
+    }
+
 
     @Override
     public Student updateStudent(int rollno,String section, Student student) throws StudentNotFound {
@@ -62,6 +70,7 @@ public class StudentServiceImpl implements StudentService {
         studenyByRollno.setEmail(student.getEmail());
         return studentRepository.save(studenyByRollno);
     }
+
 
     @Override
     public String deleteStudent(int rollno,String section) throws StudentNotFound {

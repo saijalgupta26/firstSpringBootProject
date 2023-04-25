@@ -6,7 +6,6 @@ import com.example.mevenproject.request.StudentRequest;
 import com.example.mevenproject.response.StudentResponse;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface StudentService {
     StudentResponse createStudent(StudentRequest studentRequest);
@@ -21,5 +20,7 @@ public interface StudentService {
 
     Student findStudentByEmailAndPassword(String email,String password) throws StudentNotFound;
     List<Student> findStudenyBysection(String section);
+    Student patchStudent(int rollno,String section,Student student) throws StudentNotFound;
+
 
 }
