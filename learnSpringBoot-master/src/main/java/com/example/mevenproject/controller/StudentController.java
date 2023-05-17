@@ -124,6 +124,12 @@ public class StudentController {
 
         return new ResponseEntity<>(countries,HttpStatus.OK); //use external api
     }
+    @RequestMapping("/register")
+    public ModelAndView register(){
+        ModelAndView modelAndView=new ModelAndView("registration");
+        return modelAndView;
+
+    }
 
     @GetMapping("/countries")
     public ResponseEntity<?> countries()
@@ -143,6 +149,20 @@ public class StudentController {
 
         return new ResponseEntity<>(student1,HttpStatus.ACCEPTED);
     }
+    /*@GetMapping("/se")
+    public ResponseEntity<?> findStudent() throws StudentNotFound {
+        Student student = studentService.findStudentByEmailAndPassword("student1@123","Student1@123");
+        if(!ObjectUtils.isEmpty(student))
+        {
+            return  new ResponseEntity<>(student,HttpStatus.OK);
+
+        }
+        else
+        {
+            return null;
+        }*/
+
+   /* }*/
 
 
 }
