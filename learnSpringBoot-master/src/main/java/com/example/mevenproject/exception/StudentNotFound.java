@@ -1,7 +1,4 @@
 package com.example.mevenproject.exception;
-
-
-
 public class StudentNotFound extends Exception {
 
     public StudentNotFound(String error){
